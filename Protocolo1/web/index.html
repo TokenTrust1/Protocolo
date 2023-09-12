@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encriptación y Desencriptación</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Encriptación y Desencriptación</h1>
+    <textarea id="inputText" placeholder="Ingresa el mensaje aquí"></textarea>
+    <button id="encryptButton">Encriptar</button>
+    <button id="decryptButton">Desencriptar</button>
+    <p>Resultado:</p>
+    <textarea id="outputText" readonly></textarea>
+    <script>
+        const mapping = {
+    'a': 'z',
+    'b': 'Y',
+    'c': 'x',
+    'd': 'w',
+    'e': 'v',
+    'f': 'u',
+    'g': 't',
+    'h': 's',
+    'i': 'r',
+    'j': 'q',
+    'k': 'p',
+    'l': 'o',
+    'm': 'n',
+    'n': 'm',
+    'o': 'l',
+    'p': 'k',
+    'q': 'j',
+    'r': 'i',
+    's': 'h',
+    't': 'g',
+    'u': 'f',
+    'v': 'e',
+    'w': 'd',
+    'x': 'c',
+    'y': 'b',
+    'z': 'a'
+};
+
+function encrypt(message) {
+    let encryptedMessage = "";
+    for (const char of message) {
+        if (char in mapping) {
+            encryptedMessage += mapping[char];
+        } else {
+            encryptedMessage += char;
+        }
+    }
+    return encryptedMessage;
+}
+
+function decrypt(encryptedMessage) {
+    const reverseMapping = {};
+    for (const key in mapping) {
+        if (mapping.hasOwnProperty(key)) {
+            const value = mapping[key];
+            reverseMapping[value] = key;
+        }
+    }
+
+    let decryptedMessage = "";
+    for (const char of encryptedMessage) {
+        if (char in reverseMapping) {
+            decryptedMessage += reverseMapping[char];
+        } else {
+            decryptedMessage += char;
+        }
+    }
+    return decryptedMessage;
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const inputText = document.getElementById("inputText");
+    const encryptButton = document.getElementById("encryptButton");
+    const decryptButton = document.getElementById("decryptButton");
+    const outputText = document.getElementById("outputText");
+
+    encryptButton.addEventListener("click", function () {
+        const textToEncrypt = inputText.value;
+        const encryptedText = encrypt(textToEncrypt);
+        outputText.value = encryptedText;
+    });
+
+    decryptButton.addEventListener("click", function () {
+        const textToDecrypt = outputText.value;
+        const decryptedText = decrypt(textToDecrypt);
+        inputText.value = decryptedText;
+    });
+});
+
+    </script>
+</body>
+</html>
+
+
